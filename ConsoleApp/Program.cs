@@ -68,13 +68,49 @@ namespace ConsoleApp
             }
         }
         static void ModifyAuthor()
-        { }
+        {
+            Console.Write("Proporcione el identificador del autor a modificar: ");
+            int authorId = Convert.ToInt32(Console.ReadLine());
+            var author = context.Authors.FirstOrDefault(a => a.AuthorId == authorId); 
+            if (author != null)
+            { 
+                Console.WriteLine("Datos actuales del autor:");
+                Console.WriteLine($"Identificador: {author.AuthorId}");
+                Console.WriteLine($"Nombres: {author.FirstName}"); 
+                Console.WriteLine($"Apellidos: {author.LastName}"); 
+                Console.WriteLine("Nuevos datos."); 
+                Console.Write("Proporcione el nuevo nombre del autor: "); 
+                string firstName = Console.ReadLine();
+                Console.Write("Proporcione los apellidos del autor: ");
+                string lastName = Console.ReadLine(); 
+                author.FirstName = firstName; 
+                author.LastName = lastName;
+                context.Authors.Update(author);
+                context.SaveChanges();
+            } 
+            else
+            {
+                Console.WriteLine("Lo siento. El autor no existe."); 
+            }
+        }
             
             
         private static void DeleteAuthor()
             {
-
+            Console.Write("Proporcione el identificador del autor a eliminar: ");
+            int authorId = Convert.ToInt32(Console.ReadLine()); 
+            var author = context.Authors.FirstOrDefault(a => a.AuthorId == authorId); 
+            if (author != null) { Console.WriteLine("Datos actuales del autor:"); 
+                Console.WriteLine($"Identificador: {author.AuthorId}");
+                Console.WriteLine($"Nombres: {author.FirstName}");
+                Console.WriteLine($"Apellidos: {author.LastName}");
+                context.Authors.Remove(author); context.SaveChanges();
+            } 
+            else 
+            {
+                Console.WriteLine("Lo siento. El autor a eliminar no existe.");
             }
+        }
         }
 
 
